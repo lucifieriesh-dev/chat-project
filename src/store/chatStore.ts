@@ -115,22 +115,6 @@ const useChatStore = create<ChatState>((set, get) => ({
       },
       messageInput: ''
     }));
-
-    // Generate AI response
-    setTimeout(() => {
-      const aiResponse = generateAIResponse(content);
-      const sources = getRelevantSources(content);
-      
-      const aiResponseObj: AIResponse = {
-        id: `ai-${Date.now()}`,
-        content: aiResponse,
-        sources
-      };
-      
-      set(state => ({ 
-        aiResponses: [aiResponseObj, ...state.aiResponses]
-      }));
-    }, 500);
   },
   
   generateAIResponse: (query: string) => {
