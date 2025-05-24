@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { conversations } from '../data/mockData';
 import { AIResponse, Conversation, Message } from '../types';
-import { generateAIResponse, getRelevantSources, rephraseText } from '../lib/utils';
+import { generateAIResponse, getRelevantSources } from '../lib/utils';
 
 interface ChatState {
   conversations: Conversation[];
@@ -18,7 +18,6 @@ interface ChatState {
   sendMessage: (content: string) => void;
   generateAIResponse: (query: string) => void;
   addToComposer: (content: string) => void;
-  rephraseText: (content: string, tone: string) => void;
   toggleAICopilot: () => void;
   askAIQuestion: (question: string) => void;
 }
@@ -134,11 +133,6 @@ const useChatStore = create<ChatState>((set, get) => ({
   
   addToComposer: (content: string) => {
     set({ messageInput: content });
-  },
-  
-  rephraseText: (content: string, tone: string) => {
-    const rephrased = rephraseText(content, tone);
-    set({ messageInput: rephrased });
   },
   
   toggleAICopilot: () => {
