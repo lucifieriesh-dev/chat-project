@@ -2,10 +2,29 @@ import React, { useState } from 'react';
 import ConversationItem from './ConversationItem';
 import { ChevronDown, FilterX, Search } from 'lucide-react';
 import useChatStore from '../../store/chatStore';
+import { Menu } from '@headlessui/react';
+
+const statusOptions = [
+  { id: 'open', label: 'Open' },
+  { id: 'closed', label: 'Closed' },
+  { id: 'pending', label: 'Pending' },
+  { id: 'resolved', label: 'Resolved' },
+  { id: 'all', label: 'All' }
+];
+
+const sortOptions = [
+  { id: 'waiting-longest', label: 'Waiting longest' },
+  { id: 'recent', label: 'Most recent' },
+  { id: 'priority', label: 'Priority' },
+  { id: 'unassigned', label: 'Unassigned' },
+  { id: 'assigned-to-me', label: 'Assigned to me' }
+];
 
 const ConversationList: React.FC = () => {
   const { conversations, activeConversation, setActiveConversation } = useChatStore();
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedStatus, setSelectedStatus] = useState(statusOptions[0]);
+  const [selectedSort, setSelectedSort] = useState(sortOptions[0]);
   
   const filteredConversations = conversations.filter(
     conv => conv.user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -25,15 +44,51 @@ const ConversationList: React.FC = () => {
         </div>
         
         <div className="flex items-center gap-2">
-          <button className="flex items-center text-sm text-gray-600 bg-white border border-gray-300 px-3 py-1 rounded-md">
-            <span className="mr-1">Open</span>
-            <ChevronDown className="w-4 h-4" />
-          </button>
+          <Menu as="div" className="relative">
+            <Menu.Button className="flex items-center text-sm text-gray-600 bg-white border border-gray-300 px-3 py-1 rounded-md hover:bg-gray-50">
+              <span className="mr-1">{selectedStatus.label}</span>
+              <ChevronDown className="w-4 h-4" />
+            </Menu.Button>
+            <Menu.Items className="absolute left-0 mt-1 w-48 bg-white rounded-md shadow-lg border border-gray-200 py-1 z-10">
+              {statusOptions.map((option) => (
+                <Menu.Item key={option.id}>
+                  {({ active }) => (
+                    <button
+                      className={`${
+                        active ? 'bg-gray-50 text-gray-900' : 'text-gray-700'
+                      } w-full text-left px-4 py-2 text-sm`}
+                      onClick={() => setSelectedStatus(option)}
+                    >
+                      {option.label}
+                    </button>
+                  )}
+                </Menu.Item>
+              ))}
+            </Menu.Items>
+          </Menu>
           
-          <button className="flex items-center text-sm text-gray-600 bg-white border border-gray-300 px-3 py-1 rounded-md">
-            <span className="mr-1">Waiting longest</span>
-            <ChevronDown className="w-4 h-4" />
-          </button>
+          <Menu as="div" className="relative">
+            <Menu.Button className="flex items-center text-sm text-gray-600 bg-white border border-gray-300 px-3 py-1 rounded-md hover:bg-gray-50">
+              <span className="mr-1">{selectedSort.label}</span>
+              <ChevronDown className="w-4 h-4" />
+            </Menu.Button>
+            <Menu.Items className="absolute left-0 mt-1 w-48 bg-white rounded-md shadow-lg border border-gray-200 py-1 z-10">
+              {sortOptions.map((option) => (
+                <Menu.Item key={option.id}>
+                  {({ active }) => (
+                    <button
+                      className={`${
+                        active ? 'bg-gray-50 text-gray-900' : 'text-gray-700'
+                      } w-full text-left px-4 py-2 text-sm`}
+                      onClick={() => setSelectedSort(option)}
+                    >
+                      {option.label}
+                    </button>
+                  )}
+                </Menu.Item>
+              ))}
+            </Menu.Items>
+          </Menu>
         </div>
       </div>
       
