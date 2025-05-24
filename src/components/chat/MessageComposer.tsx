@@ -5,7 +5,6 @@ import { Menu } from '@headlessui/react';
 
 const MessageComposer: React.FC = () => {
   const { messageInput, setMessageInput, sendMessage } = useChatStore();
-  const [showFormatting, setShowFormatting] = useState(false);
   const [showToneOptions, setShowToneOptions] = useState(false);
   
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -74,16 +73,27 @@ const MessageComposer: React.FC = () => {
           </Menu.Items>
         </Menu>
       </div>
-      
-      {showFormatting && (
-        <div className="px-4 py-2 border-b border-gray-200 flex space-x-2">
-          <button onClick={() => formatText('B')} className="p-1.5 hover:bg-gray-100 rounded">B</button>
-          <button onClick={() => formatText('i')} className="p-1.5 hover:bg-gray-100 rounded italic">i</button>
-          <button onClick={() => formatText('code')} className="p-1.5 hover:bg-gray-100 rounded font-mono">{`</>`}</button>
-          <button onClick={() => formatText('H1')} className="p-1.5 hover:bg-gray-100 rounded">H1</button>
-          <button onClick={() => formatText('H2')} className="p-1.5 hover:bg-gray-100 rounded">H2</button>
-        </div>
-      )}
+
+      <div className="px-4 py-2 border-b border-gray-200 flex items-center space-x-2">
+        <button onClick={() => formatText('B')} className="p-1.5 hover:bg-gray-100 rounded font-medium">B</button>
+        <button onClick={() => formatText('i')} className="p-1.5 hover:bg-gray-100 rounded italic">i</button>
+        <button onClick={() => formatText('code')} className="p-1.5 hover:bg-gray-100 rounded font-mono text-sm">{`</>`}</button>
+        <button className="p-1.5 hover:bg-gray-100 rounded">
+          <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+          </svg>
+        </button>
+        <button onClick={() => formatText('H1')} className="p-1.5 hover:bg-gray-100 rounded font-medium">H1</button>
+        <button onClick={() => formatText('H2')} className="p-1.5 hover:bg-gray-100 rounded font-medium">H2</button>
+        <button className="p-1.5 hover:bg-gray-100 rounded">
+          <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="17 8 12 3 7 8" />
+            <line x1="12" y1="3" x2="12" y2="15" />
+          </svg>
+        </button>
+      </div>
 
       {showToneOptions && (
         <div className="px-4 py-2 border-b border-gray-200">
