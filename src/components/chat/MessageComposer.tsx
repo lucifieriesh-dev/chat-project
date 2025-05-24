@@ -57,19 +57,48 @@ const MessageComposer: React.FC = () => {
           </Menu.Button>
           <Menu.Items className="absolute bottom-full left-0 mb-1 w-48 bg-white rounded-md shadow-lg border border-gray-200 py-1 z-10">
             <Menu.Item>
-              {({ active }) => (
-                <button className={`${active ? 'bg-gray-50' : ''} w-full text-left px-4 py-2 text-sm text-gray-700`}>
-                  New conversation
-                </button>
-              )}
-            </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <button className={`${active ? 'bg-gray-50' : ''} w-full text-left px-4 py-2 text-sm text-gray-700`}>
-                  Search conversations
-                </button>
-              )}
-            </Menu.Item>
+  {({ active }) => (
+    <button className={`${active ? 'bg-gray-50' : ''} w-full text-left px-4 py-2 text-sm text-gray-700`}>
+      Rephrase
+    </button>
+  )}
+</Menu.Item>
+<Menu.Item>
+  {({ active }) => (
+    <button className={`${active ? 'bg-gray-50' : ''} w-full text-left px-4 py-2 text-sm text-gray-700`}>
+      My tone of voice
+    </button>
+  )}
+</Menu.Item>
+<Menu.Item>
+  {({ active }) => (
+    <button className={`${active ? 'bg-gray-50' : ''} w-full text-left px-4 py-2 text-sm text-gray-700`}>
+      More friendly
+    </button>
+  )}
+</Menu.Item>
+<Menu.Item>
+  {({ active }) => (
+    <button className={`${active ? 'bg-gray-50' : ''} w-full text-left px-4 py-2 text-sm text-gray-700`}>
+      More formal
+    </button>
+  )}
+</Menu.Item>
+<Menu.Item>
+  {({ active }) => (
+    <button className={`${active ? 'bg-gray-50' : ''} w-full text-left px-4 py-2 text-sm text-gray-700`}>
+      Fix grammar & spelling
+    </button>
+  )}
+</Menu.Item>
+<Menu.Item>
+  {({ active }) => (
+    <button className={`${active ? 'bg-gray-50' : ''} w-full text-left px-4 py-2 text-sm text-gray-700`}>
+      Translate...
+    </button>
+  )}
+</Menu.Item>
+
           </Menu.Items>
         </Menu>
       </div>
