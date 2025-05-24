@@ -10,145 +10,89 @@ export function truncateText(text: string, length: number): string {
   return text.slice(0, length) + '...';
 }
 
-export function rephraseText(content: string, tone: string): string {
-  const tones = {
-    friendly: `Hey there! 👋 ${content
-      .replace(/please/gi, '')
-      .replace(/\./g, '! ')
-      .replace(/Hello|Hi/gi, 'Hey')
-      .trim()}`,
-    
-    formal: `Dear valued customer,\n\n${content
-      .replace(/hey|hi/gi, 'Hello')
-      .replace(/!+/g, '.')
-      .trim()}\n\nBest regards,\nCustomer Support`,
-    
-    default: content
-  };
-
-  return tones[tone as keyof typeof tones] || content;
-}
-
 export function generateAIResponse(query: string): string {
-  // Enhanced AI responses based on different query types
   const responses: { [key: string]: string } = {
-    greeting: `👋 Hello! I'm your AI assistant. I can help you with:
+    refund_policy: `Here are the exceptions to our 30 day refund policy:
 
-• Orders and shipping
-• Product information
-• Returns and refunds
-• Account management
-• Technical support
+1. Product has defects or is damaged upon arrival
+2. Customer is dissatisfied with our service
+3. The order was a mistake or made accidentally
+4. Product doesn't match the description
+5. Size or fit issues with clothing items
 
-What can I help you with today?`,
-
-    refund: `I understand you're interested in a refund. Let me help you with that!
-
-Here's what you need to know:
-
-1. For orders within 30 days:
-   ✅ Full refund available
-   📦 Free return shipping
-   💳 Money back in 3-5 days
-
-2. For orders over 30 days:
-   🎁 Store credit option
-   📝 Special case review
-   ⚡ Quick processing
+Please note that all exceptions are subject to approval from a team leader.
 
 Would you like me to:
-1. Start your refund process
-2. Explain our refund policy
-3. Check your order status
+1. Start the refund process
+2. Explain the full policy
+3. Connect you with a team leader`,
 
-Just let me know which option you prefer!`,
-    
-    shipping: `📦 Here's your shipping information:
+    exchange_process: `Here's how to process an exchange:
 
-🚚 Standard: 3-5 business days
-✈️ Express: 1-2 business days
-🌍 International: 7-14 business days
+1. Verify the order details
+2. Check if item is eligible (within 30 days)
+3. Confirm new item is in stock
+4. Generate return label
+5. Process exchange in system
 
-Your order includes:
-✅ Real-time tracking
-🛡️ Insurance coverage
-📱 SMS updates
+Required information:
+✓ Original order number
+✓ Item SKU
+✓ Reason for exchange
+✓ New item preference
 
-Would you like me to:
-1. Track your order
-2. Upgrade shipping
-3. Estimate delivery time`,
-    
-    product: `I'd love to help you with product information!
+Would you like me to help with any of these steps?`,
 
-Key features:
-🌟 Premium quality
-🛠️ Expert craftsmanship
-✨ 1-year warranty
-↩️ 30-day returns
+    damaged_items: `Our policy for damaged items:
 
-Would you like to:
-1. See product demos
-2. Compare features
-3. Check availability
-4. Read reviews`,
-    
-    account: `Let's help you manage your account!
+🔍 Documentation needed:
+• Photos of damage
+• Order number
+• Date received
 
-Available options:
-👤 Update profile
-🔐 Security settings
-🔔 Notification preferences
-📋 Order history
-💳 Payment methods
+📋 Process:
+1. Immediate refund issued
+2. Free return shipping
+3. Replacement sent if available
+4. 10% discount on next purchase
 
-What would you like to do first?`,
-    
-    help: `I'm here to assist! Here's what I can help with:
+Would you like me to start this process?`,
 
-🛍️ Shopping
-• Browse products
-• Check prices
-• Find deals
+    shipping_times: `Current shipping timeframes:
 
-📦 Orders
-• Track shipments
-• Update details
-• Cancel orders
+🚚 Domestic:
+• Standard: 3-5 business days
+• Express: 1-2 business days
+• Same-day: Available in select cities
 
-💳 Payments
-• Process refunds
-• Update payment
-• Billing issues
+✈️ International:
+• Standard: 7-14 business days
+• Express: 3-5 business days
+• Priority: 2-3 business days
 
-Just let me know what you need!`,
-    
-    default: `I'm here to help! Could you please provide more details about your request? 
+Need help tracking an order?`,
 
-I can assist with:
-• Orders and shipping
+    default: `I'm here to help! Here are some key policies I can explain:
+
+• Refunds and returns
+• Exchanges and warranties
+• Shipping and delivery
 • Product information
 • Account management
-• Returns and refunds
-• Technical support
 
-Feel free to ask anything!`
+What would you like to know more about?`
   };
 
   const lowerQuery = query.toLowerCase();
   
-  if (lowerQuery.includes('hi') || lowerQuery.includes('hello') || lowerQuery.includes('hey')) {
-    return responses.greeting;
-  } else if (lowerQuery.includes('refund') || lowerQuery.includes('return')) {
-    return responses.refund;
+  if (lowerQuery.includes('refund policy') || lowerQuery.includes('exception')) {
+    return responses.refund_policy;
+  } else if (lowerQuery.includes('exchange') || lowerQuery.includes('process')) {
+    return responses.exchange_process;
+  } else if (lowerQuery.includes('damage') || lowerQuery.includes('broken')) {
+    return responses.damaged_items;
   } else if (lowerQuery.includes('shipping') || lowerQuery.includes('delivery')) {
-    return responses.shipping;
-  } else if (lowerQuery.includes('product') || lowerQuery.includes('item')) {
-    return responses.product;
-  } else if (lowerQuery.includes('account') || lowerQuery.includes('profile')) {
-    return responses.account;
-  } else if (lowerQuery.includes('help') || lowerQuery.includes('support')) {
-    return responses.help;
+    return responses.shipping_times;
   }
   
   return responses.default;
